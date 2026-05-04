@@ -7,10 +7,10 @@ class TravelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Travel
         fields=['id','passenger','passenger_name','source','destination','travel_date']
-
+    
 
 class PassengerSerializer(serializers.ModelSerializer):
-    travels=TravelSerializer(many=True,read_only=True)
+    Travel=TravelSerializer(many=True,read_only=True)
     class Meta:
         model=Passenger
-        fields=['id','name']
+        fields=['id','name','Travel']
