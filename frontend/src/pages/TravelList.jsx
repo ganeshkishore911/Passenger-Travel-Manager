@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import API from '../services/Api'
 import { useNavigate } from 'react-router-dom'
+import Logger from '../services/Loggers'
 
 const TravelList = () => {
   const [data, setdata] = useState([])
@@ -17,10 +18,13 @@ const TravelList = () => {
   }, [])
   const fetchdata = async () => {
     try {
+      Logger.info("fetching the travel list")
       const res = await API.get("api/travels/")
       setdata(res.data)
+      Logger.info("fetched data",res.data)
+      Logger.debug("Travel data received",res.data)
     } catch (err) {
-      console.error(err)
+      Logger.error("failed to fetch",err)
     }
   }
 

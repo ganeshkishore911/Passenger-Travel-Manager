@@ -24,10 +24,20 @@ const PassengerDetail = () => {
     
     <h2>{data.name}</h2>
     <h4>Travel History</h4>
+    <table  border={1}
+    style={{ borderCollapse: "collapse", width: "100%" }}>
+        <thead>
+            <tr>
+                <th>source</th>
+                <th>destination</th>
+                <th>travel_date</th>
+        </tr>
+        </thead>
+        <tbody>
     {data.Travel.map((t,index)=>(
-        <div key={index}> 
-        <p>{t.source}  to {t.destination}   ({t.travel_date})</p></div>
-    ))}
+       <tr key={index}> 
+       <td>{t.source}</td>   <td>{t.destination}</td>   <td>({t.travel_date})</td></tr>
+    ))}</tbody></table>
     </div>
   )
 }

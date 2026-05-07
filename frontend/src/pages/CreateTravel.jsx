@@ -1,6 +1,15 @@
 import { useState } from "react";
 import API from "../services/Api";
+import Logger from "../services/Loggers";
+import * as Yup from "yup"
 
+const travelSchema = Yup.object({
+    name:Yup.string().required("Name is required").min(3,"Minimum 3 Characters"),
+    source:Yup.string().required("Source is required"),
+    destination:Yup.string().required("Destination is required"),
+    travel_date:Yup.date().typeError("Travel date is required").required("travel date is required")
+
+})
 
 const CreateTravel = () => {
     const [form,setForm]=useState({
@@ -10,6 +19,7 @@ const CreateTravel = () => {
         travel_date:""
 
     })
+    const [errors,SetErrors]=useState({})
     const handleChange=(e)=>{
         setForm({
             ...form,
@@ -20,22 +30,35 @@ const CreateTravel = () => {
     const handleSubmit=async (e)=>{
         e.preventDefault()
         try{
+            Logger.info("posting the data")
+            await travelSchema.validate(form,{abortEarly:false})
         const res=await API.post("api/create/",form)
-        console.log(res.data)
+        Logger.info("Travel created",res.data)
         alert("Travel Created Successfully")
+        setForm({name:"",source:"",destination:"",travel_date:""})
         }catch(err){
-            console.error(err)
-            alert("error")
+            Logger.error("Failed to create travel",err)
+            let new_errors={}
+            err.inner.forEach((e)=>{
+                    new_errors[e.path]=e.message
+            })
+            SetErrors(new_errors)
+            alert(err.message)
+            console.log(err.inner)
         }
     }
 
   return (
     <div><h1>CreateTravel</h1>
             <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Name" onChange={handleChange} />
-        <input name="source" placeholder="Source" onChange={handleChange} />
-        <input name="destination" placeholder="Destination" onChange={handleChange} />
-        <input type="date" name="travel_date" onChange={handleChange} />
+<p>{errors.name}</p>
+        <input name="name" value={form.name} placeholder="Name" onChange={handleChange} />
+<p>{errors.source}</p>
+        <input name="source" value={form.source} placeholder="Source" onChange={handleChange} />
+<p>{errors.destination}</p>
+        <input name="destination" value={form.destination} placeholder="Destination" onChange={handleChange} />
+<p>{errors.travel_date}</p>
+        <input type="date" value={form.travel_date} name="travel_date" onChange={handleChange} />
 
         <button type="submit">Submit</button>
             </form>
