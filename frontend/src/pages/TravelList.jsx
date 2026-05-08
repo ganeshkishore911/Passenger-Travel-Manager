@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import API from '../services/Api'
 import { useNavigate } from 'react-router-dom'
 import Logger from '../services/Loggers'
+import "../styles/TravelList.scss"
 
 const TravelList = () => {
   const [data, setdata] = useState([])
@@ -64,13 +65,14 @@ const TravelList = () => {
   }
 
   return (
-  <div>
+  <div className='travel-list' >
     <h2>Passenger Travel List</h2>
 
     {data.length === 0 ? (
       <p>No travels found</p>
     ) : (
-      <table border="1" cellPadding="10" style={{ borderCollapse: "collapse", width: "100%" }}>
+      <div className='table-container'>
+      <table >
         <thead>
           <tr>
             <th>Passenger</th>
@@ -115,7 +117,7 @@ const TravelList = () => {
                   <td>{item.travel_date}</td>
 
                   <td>
-                    <button onClick={(e) => handleUpdate(e, item.id)}>
+                    <button className='save-btn' onClick={(e) => handleUpdate(e, item.id)}>
                       Save
                     </button>
                   </td>
@@ -126,9 +128,9 @@ const TravelList = () => {
                   <td>{item.destination}</td>
                   <td>{item.travel_date}</td>
 
-                  <td>
-                    <button onClick={(e) => startEdit(e, item)}>Edit</button>
-                    <button onClick={(e) => handleDelete(e, item.id)}>
+                  <td className='actions'>
+                    <button className="edit-btn" onClick={(e) => startEdit(e, item)}>Edit</button>
+                    <button className=" delete-btn" onClick={(e) => handleDelete(e, item.id)}>
                       Delete
                     </button>
                   </td>
@@ -138,6 +140,7 @@ const TravelList = () => {
           ))}
         </tbody>
       </table>
+      </div>
     )}
   </div>
 )

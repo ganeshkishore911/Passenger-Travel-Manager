@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../services/Api";
 import Logger from "../services/Loggers";
+import "../styles/CreateTravel.scss"
 import * as Yup from "yup"
 
 const travelSchema = Yup.object({
@@ -36,6 +37,7 @@ const CreateTravel = () => {
         Logger.info("Travel created",res.data)
         alert("Travel Created Successfully")
         setForm({name:"",source:"",destination:"",travel_date:""})
+        SetErrors({})
         }catch(err){
             Logger.error("Failed to create travel",err)
             let new_errors={}
@@ -43,22 +45,26 @@ const CreateTravel = () => {
                     new_errors[e.path]=e.message
             })
             SetErrors(new_errors)
-            alert(err.message)
+            // alert(err.message)
             console.log(err.inner)
         }
     }
 
   return (
-    <div><h1>CreateTravel</h1>
+    <div className="create-travel"><h1>CreateTravel</h1>
             <form onSubmit={handleSubmit}>
-<p>{errors.name}</p>
         <input name="name" value={form.name} placeholder="Name" onChange={handleChange} />
-<p>{errors.source}</p>
+        <p className="error">{errors.name}</p>
+
+
         <input name="source" value={form.source} placeholder="Source" onChange={handleChange} />
-<p>{errors.destination}</p>
+        <p className="error">{errors.source}</p>
         <input name="destination" value={form.destination} placeholder="Destination" onChange={handleChange} />
-<p>{errors.travel_date}</p>
+        <p className="error">{errors.destination}</p>
+
         <input type="date" value={form.travel_date} name="travel_date" onChange={handleChange} />
+<p className="error">{errors.travel_date}</p>
+
 
         <button type="submit">Submit</button>
             </form>

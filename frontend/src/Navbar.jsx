@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import "../src/styles/Navbar.scss"
 
 const Navbar = () => {
   
   return (
-    <div style={{
-      width:"100%",display:"flex",gap:"20px", padding:"30px",justifyContent:"center" 
-    }}>
+    <div className="navbar">
     <Link to="/create">Create travel</Link>
-    <Link to="/">     travel list</Link>
+    <Link to="/">travel list</Link>
     </div>
   )
 }

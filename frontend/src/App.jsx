@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import TravelList from "./pages/TravelList";
 import PassengerDetail from "./pages/PassengerDetail";
 
+
 function App() {
   return (<>
     

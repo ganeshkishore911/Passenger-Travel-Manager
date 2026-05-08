@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import API from '../services/Api'
 import { useParams } from 'react-router-dom'
+import "../styles/PassengerDetail.scss"
 import {useReactTable,getCoreRowModel,flexRender} from "@tanstack/react-table"
 
 const PassengerDetail = () => {
@@ -19,7 +20,7 @@ const PassengerDetail = () => {
         console.error(err)
     }
    }
-   if (!data) return <p>Loading...</p>;
+   
    const columns=[
  {header:"Source",accessorKey:"source"},
  {header:"Destination",accessorKey:"destination"},
@@ -30,10 +31,10 @@ const table=useReactTable({
  columns,
  getCoreRowModel:getCoreRowModel()
 })
-
+if (!data) return <p>Loading...</p>;
    
   return (
-    <div><h1>PassengerDetail</h1>
+    <div className='passengerdetail'><h1>PassengerDetail</h1>
     
     <h2>{data.name}</h2>
     <h4>Travel History</h4>
