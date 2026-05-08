@@ -14,7 +14,7 @@ const TravelList = () => {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
+  useEffect(() => {  
     fetchdata()
   }, [])
   const fetchdata = async () => {
