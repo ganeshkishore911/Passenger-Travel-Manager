@@ -5,6 +5,8 @@ from .models import Passenger
 from travel.models import Travel
 from .serializers import PassengerSerializer
 from travel.serializer import TravelSerializer
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 import logging
 
 
@@ -34,9 +36,11 @@ def get_Passenger_object(id):
             return Passenger.objects.get(id=id)
         except Passenger.DoesNotExist:
             return None   
- 
+
+@method_decorator(cache_page(60),name='dispatch') 
 class PassengerDetail(APIView):
     def get(self,request,id):
+        print("views hit for testing the cache")
         passenger=get_Passenger_object(id)
         if not passenger:
             return Response({"error":"Not Found"})
