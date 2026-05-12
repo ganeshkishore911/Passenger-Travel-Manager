@@ -1,15 +1,19 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Passenger,Travel
-from passengers.serializers import PassengerSerializer,TravelSerializer
+from .models import Travel
+from passengers.serializers import TravelSerializer
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 import logging
 
 logger=logging.getLogger(__name__)
 
 # Create your views here.
+@method_decorator(cache_page(60),name='dispatch')
 class TravelList(APIView):
     def get(self,request):
+        print("DATABASE HIT")  #testing cache
         travels=Travel.objects.all().order_by('-id')
         serilaizer=TravelSerializer(travels,many=True)
         return Response(serilaizer.data,status=status.HTTP_200_OK)

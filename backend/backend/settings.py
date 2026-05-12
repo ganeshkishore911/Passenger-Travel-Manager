@@ -76,15 +76,25 @@ LOGGING = {
 }
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware', # cache
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.common.CommonMiddleware',
+        'django.middleware.cache.FetchFromCacheMiddleware',    #cache
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-cache"
+    }
+}
+CACHE_MIDDLEWARE_SECONDS = 60
 
 CORS_ALLOW_ALL_ORIGINS=True
 

@@ -69,9 +69,7 @@ const CreateTravel = () => {
         }
 
         
-
-
-  return (
+ return (
     <div className="create-travel"><h1>CreateTravel</h1>
             {/* <form onSubmit={handleSubmit}>
         <input name="name" value={form.name} placeholder="Name" onChange={handleChange} />
